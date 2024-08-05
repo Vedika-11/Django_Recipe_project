@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block start %}
+<div class="full-page-section">
+  <div class="page-container">
+<h1 class="project-heading">Receipe Project</h1>
+<div class="container mt-3">
+    <div class="row first-section">
+    <form class="col-5 card form-section" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2 class="text-center"> Add Receipe </h2>
+        <hr>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Receipe Name</label>
+          <input type="text" class="form-control" name="receipe_name" placeholder="Enter Receipe Name " required>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Receipe Description</label>
+          <textarea class="form-control" name="receipe_description" placeholder="Describe About Receipe" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Receipe Image</label>
+            <input type="file" class="form-control" name="receipe_image">
+          </div>
+        <button type="submit" class="btn btn-success">Add Receipe</button>
+      </form>
+
+      <div class="col-7 first-section-right-section">
+        <h2 class="first-section-right-section-heading">Description</h2>
+        <div class="detail-container">
+          <ol>
+            <li><b>Recipe Addition:</b>
+              <ul>
+                <li style="font-size: 13px;">Users can add new recipes through a form.</li>
+                <li style="font-size: 13px;">The form includes fields for recipe name, description, and an image.</li>
+                <li style="font-size: 13px;">Upon submission, the recipe data is validated and stored in the database.</li>
+              </ul>
+            </li>
+            <li> <b>Recipe Display:</b>
+              <ul>
+                <li style="font-size: 13px;">All stored recipes are displayed in a table format on a webpage.</li>
+                <li style="font-size: 13px;">The table includes columns for recipe ID, name, description, image, and actions.</li>
+              </ul>
+            </li>
+            <li> <b>Image Handling:</b>
+              <ul>
+                <li style="font-size: 13px;">Recipe images are uploaded through the form and stored in a media directory.</li>
+                <li style="font-size: 13px;">Images are displayed in the table along with the other recipe details.</li>
+                <li style="font-size: 13px;">Proper URL handling is ensured for displaying images from the media directory.</li>
+              </ul>
+            </li>
+            <li> <b>CRUD Operations:</b>
+              <ul>
+                <li style="font-size: 13px;">Users can perform Create, Read, Update, and Delete (CRUD) operations on recipes.</li>
+                <li style="font-size: 13px;">There are buttons for deleting and updating recipes in the actions column of the table.</li>
+                <li style="font-size: 13px;">Deleting a recipe removes it from the database and the table.</li>
+                <li style="font-size: 13px;">Updating a recipe allows users to modify its details through a pre-filled form.</li>
+              </ul>
+            </li>
+            
+          </ul>
+         
+
+
+        </div>
+      </div>
+    </div>
+
+</div>
+<div class="second-section">
+  <h2 class="table-heading">All Receipes</h2>
+<div class="container " style="padding: 20px;">
+  
+<table class="table table-section">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Recipe Name</th>
+      <th scope="col" style="width: 40%;">Recipe Description</th>
+      <th scope="col">Recipe Image</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for receipe in receipes %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{receipe.receipe_name}}</td>
+      <td>{{receipe.receipe_description}}</td>
+      <td><img src="/media/{{receipe.receipe_image}}" alt="" style="height: 150px;"></td>
+      <td>
+        <a href="delete_receipe/{{receipe.id}}"><button class="btn btn-danger mt-2">Delete&nbsp;</button></a>
+        <a href="update_receipe/{{receipe.id}}"><button class="btn btn-success mt-2">Update</button></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
